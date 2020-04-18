@@ -1,11 +1,12 @@
 import React from 'react';
-import './App.css';
+
 
 
 class FlashCardApp extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { items: [], showBack: false, currentItem: 0 };
+    this.state = { items: [], showBack: false, currentItem: 0, 
+      style: {"paddingTop": "15%", "paddingBottom": "15%", "paddingLeft": "15%", "paddingRight": "15%"} };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.flip = this.flip.bind(this);
@@ -14,12 +15,13 @@ class FlashCardApp extends React.Component {
 
   render() {
     return (
-      <div class="container col-8">
+      <div class="container col-5">
         <br/>
         <br/>
-        <FlashCardList items={this.state.items} showBack={this.state.showBack} currentItem={this.state.currentItem} />
+        <FlashCardList items={this.state.items} showBack={this.state.showBack} currentItem={this.state.currentItem} 
+            style={this.state.style} />
         <div class="text-center form-group">
-          <br></br>
+          <br/>
           <button class="btn btn-primary" onClick={this.flip}>
             Flip Flash Card
           </button>
@@ -31,18 +33,8 @@ class FlashCardApp extends React.Component {
         <br/>
         <h3 class="text-center">Add New Flash Cards</h3>
         <form onSubmit={this.handleSubmit} class="form-group">
-          <label htmlFor="new-flashcard-front">
-            Front of Flash Card
-          </label>
-          <input class="form-control"
-            id="new-flashcard-front"
-          />
-          <label htmlFor="new-flashcard-back">
-            Back of Flash Card
-          </label>
-          <input class="form-control"
-            id="new-flashcard-back"
-          />
+          <input class="form-control" id="new-flashcard-front" placeholder="Front of Flash Card"/>
+          <input class="form-control" id="new-flashcard-back"placeholder="Back of Flash Card"/>
           <br/>
           <button class="btn btn-success">
             Add Flash Card
@@ -53,8 +45,12 @@ class FlashCardApp extends React.Component {
   }
 
   getNew() {
-    if (this.state.items !== []) {
-      this.setState({ currentItem: Math.floor(Math.random()*this.state.items.length) });
+    if (this.state.items.length > 1) {
+      var randomChoice = Math.floor(Math.random()*this.state.items.length)
+      while (randomChoice === this.state.currentItem) {
+        randomChoice = Math.floor(Math.random()*this.state.items.length)
+      }
+      this.setState({ currentItem: randomChoice });
     }
   }
 
@@ -62,11 +58,11 @@ class FlashCardApp extends React.Component {
     console.log(this.state.showBack)
     if (this.state.showBack && this.state.items.length > 0) {
       this.setState({ showBack: false });
-      document.getElementById("flashCardContainer").innerHTML = this.state.items[this.state.currentItem].front
+      document.getElementById("flashCardContainer").value = this.state.items[this.state.currentItem].front
     }
     else if (!this.state.showBack && this.state.items.length > 0) {
       this.setState({ showBack: true });
-      document.getElementById("flashCardContainer").innerHTML = this.state.items[this.state.currentItem].back
+      document.getElementById("flashCardContainer").value = this.state.items[this.state.currentItem].back
     }
   }
 
@@ -102,27 +98,24 @@ class FlashCardList extends React.Component {
       
       if (this.props.showBack === false) {
         return (
-          <div class="container col-6 rounded form-control text-center" id="flashCardContainer"
-              style={{"paddingTop": "10%", "paddingBottom": "10%", "paddingLeft": "5%", "paddingRight": "5%"}}>
-              {this.props.items[this.props.currentItem].front}
-          </div>
+          <textarea class="form-control text-center" id="flashCardContainer" 
+            value={this.props.items[this.props.currentItem].front} style={this.props.style} disabled>
+          </textarea>
         );
       }
       else if (this.props.showBack === true) {
         return (
-          <div class="container col-6 rounded form-control text-center" id="flashCardContainer"
-              style={{"paddingTop": "10%", "paddingBottom": "10%", "paddingLeft": "5%", "paddingRight": "5%"}}>
-              {this.props.items[this.props.currentItem].back}
-          </div>
+          <textarea class="form-control text-center" id="flashCardContainer" 
+              value={this.props.items[this.props.currentItem].back} style={this.props.style} disabled>
+          </textarea>
         
         );
       }   
     }
     else {
       return (
-        <div class="container col-6 rounded form-control text-center" id="flashCardContainer"
-            style={{"paddingTop": "10%", "paddingBottom": "10%", "paddingLeft": "5%", "paddingRight": "5%"}}>
-        </div>
+        <textarea class="form-control text-center" id="flashCardContainer" style={this.props.style} disabled>
+        </textarea>
         
       );
     }
