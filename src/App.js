@@ -9,7 +9,7 @@ class FlashCardApp extends React.Component {
         super(props);
         this.state = {
             items: [], showBack: false, currentItem: 0, text: null,
-            style: { "paddingTop": "10%", "paddingBottom": "10%", "paddingLeft": "15%", "paddingRight": "15%", "font-size": "20px" }
+            style: { "paddingTop": "15%", "paddingBottom": "15%", "paddingLeft": "15%", "paddingRight": "15%", "fontSize": "20px" }
         };
         this.handleSubmit = this.handleSubmit.bind(this);
         this.flip = this.flip.bind(this);
@@ -20,7 +20,7 @@ class FlashCardApp extends React.Component {
 
     render() {
         return (
-            <div class="container col-5">
+            <div class="container col-6">
                 <br />
                 <br />
                 <FlashCardContainer items={this.state.items} showBack={this.state.showBack} currentItem={this.state.currentItem}
@@ -118,7 +118,7 @@ class FlashCardApp extends React.Component {
                 items: state.items.concat(item),
             }));
         }
-        catch {
+        catch(e) {
             alert('Error: Unable to process the yaml file, see the Yaml File Format')
         }
     }
@@ -128,6 +128,7 @@ class FlashCardApp extends React.Component {
      */
     getNew() {
         if (this.state.items.length > 1) {
+            this.setState({ showBack: false });
             var randomChoice = Math.floor(Math.random() * this.state.items.length)
             while (randomChoice === this.state.currentItem) {
                 randomChoice = Math.floor(Math.random() * this.state.items.length)
@@ -201,14 +202,14 @@ class FlashCardContainer extends React.Component {
 
             if (this.props.showBack === false) {
                 return (
-                    <textarea class="form-control text-center" id="flashCardContainer"
+                    <textarea className="form-control text-center" id="flashCardContainer"
                         value={this.props.items[this.props.currentItem].front} style={this.props.style} disabled>
                     </textarea>
                 );
             }
             else if (this.props.showBack === true) {
                 return (
-                    <textarea class="form-control text-center" id="flashCardContainer"
+                    <textarea className="form-control text-center" id="flashCardContainer"
                         value={this.props.items[this.props.currentItem].back} style={this.props.style} disabled>
                     </textarea>
 
@@ -217,7 +218,7 @@ class FlashCardContainer extends React.Component {
         }
         else {
             return (
-                <textarea class="form-control text-center" id="flashCardContainer" style={this.props.style} disabled>
+                <textarea className="form-control text-center" id="flashCardContainer" style={this.props.style} disabled>
                 </textarea>
 
             );
