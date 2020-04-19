@@ -5,7 +5,7 @@ class FlashCardApp extends React.Component {
   constructor(props) {
     super(props);
     this.state = { items: [], showBack: false, currentItem: 0, text: null,
-      style: {"paddingTop": "15%", "paddingBottom": "15%", "paddingLeft": "15%", "paddingRight": "15%"} };
+      style: {"paddingTop": "10%", "paddingBottom": "10%", "paddingLeft": "15%", "paddingRight": "15%", "font-size": "20px"} };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.flip = this.flip.bind(this);
@@ -32,12 +32,12 @@ class FlashCardApp extends React.Component {
           </button>
         </div>
         <br/>
-        <h4 class="text-center">Add New Flashcards from Yaml</h4>
+        <h4 class="text-center">Add New Flashcards from a Yaml File</h4>
         <div class="text-center">
-            <input type="file" name="file"  onChange={this.handleFileSelect}/>
+            <input type="file" name="file" onChange={this.handleFileSelect}/>
             &nbsp; &nbsp;
             <button class="btn" onClick={function () {
-              alert('File format:\n ' +
+              alert('The required format of submitted yaml files is:\n\n ' +
                      'SectionName:\n    Weight: 2\n    Description: blah blah\n    Key Knowledge Areas:\n        - Blah Blah\n    Examples:\n' +
                      '        - / (root) filesystem\n    Questions:\n        Prompts:\n            - / (root) filesystem\n        Answers:\n            ' +
                      '- / (root) filesystem\n\nNotes:\nMultiple top level keys are supported but they\'re all lumped together, only the Questions key and ' + 
@@ -61,8 +61,9 @@ class FlashCardApp extends React.Component {
   }
   
   handleFileSelect(evt) {
-      if (!evt.target.files[0].name.includes("yaml") || !evt.target.files[0].name.includes("yml")) {
+      if (!evt.target.files[0].name.includes("yaml") && !evt.target.files[0].name.includes("yml")) {
         alert("Please submit a valid yaml file")
+        return
       }
       var reader = new FileReader();
   
