@@ -7,7 +7,7 @@ class FlashCardPopup extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            items: this.props.items, showBack: false, currentItem: 0, text: null,
+            items: this.props.items, showBack: false, currentItem: 0, text: null, currentItemWasSet: false,
             style: { "paddingTop": "15%", "paddingBottom": "15%", "paddingLeft": "15%", "paddingRight": "15%", "fontSize": "40px" }
         };
         this.flip = this.flip.bind(this);
@@ -16,38 +16,42 @@ class FlashCardPopup extends React.Component {
 
     render() {
         if (this.state.items.length > 0) {
-
+            // Bodge to get this working so we don't always start with flash card 0
+            if (this.state.currentItemWasSet === false) {
+                var randomChoice = Math.floor(Math.random() * this.state.items.length)
+                this.setState({ currentItem: randomChoice, currentItemWasSet: true });
+            }
             if (this.state.showBack === false) {
                 return (
-                    <div class="text-center form-group">
-                        <textarea className="form-control text-center" id="flashCardContainer"
-                            value={this.state.items[this.state.currentItem].front} style={this.state.style} disabled>
-                        </textarea>
-                        <br />
-                        <button class="btn btn-primary" onClick={this.flip}>
-                            Flip Flash Card
-                        </button>
-                        &nbsp; &nbsp;
-                        <button class="btn btn-info" onClick={this.getNew}>
-                            Another Flash Card
-                        </button>
+                    <div>
+                        <div class="text-center form-group">
+                            <textarea className="form-control text-center" id="flashCardContainer"
+                                value={this.state.items[this.state.currentItem].front} style={this.state.style} disabled>
+                            </textarea>
+                            <br />
+                            <button class="btn btn-info" onClick={this.getNew}>
+                                 Get Random Flash Card
+                            </button>
+                        </div>
+                        <div onClick={this.flip} style={{"width":"99%","position":"absolute", "top":"5px", "left":"5px","height":"80%"}} >
+                        </div>
                     </div>
                 );
             }
             else if (this.state.showBack === true) {
                 return (
-                    <div class="text-center form-group">
-                        <textarea className="form-control text-center" id="flashCardContainer"
-                            value={this.state.items[this.state.currentItem].back} style={this.state.style} disabled>
-                        </textarea>
-                        <br />
-                        <button class="btn btn-primary" onClick={this.flip}>
-                            Flip Flash Card
-                        </button>
-                        &nbsp; &nbsp;
-                        <button class="btn btn-info" onClick={this.getNew}>
-                            Another Flash Card
-                        </button>
+                    <div>
+                        <div class="text-center form-group">
+                            <textarea className="form-control text-center" id="flashCardContainer"
+                                value={this.state.items[this.state.currentItem].back} style={this.state.style} disabled>
+                            </textarea>
+                            <br />
+                            <button class="btn btn-info" onClick={this.getNew}>
+                                Get Random Flash Card
+                            </button>
+                        </div>
+                        <div onClick={this.flip} style={{"width":"99%","position":"absolute", "top":"5px", "left":"5px","height":"80%"}} >
+                        </div>
                     </div>
                 );
             }
