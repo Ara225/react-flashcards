@@ -17,6 +17,17 @@ class FlashCardApp extends React.Component {
     }
 
     render() {
+        // Load voices in case we need them
+        window.speechSynthesis.getVoices()
+        // list of languages is probably not loaded, wait for it
+        if(window.speechSynthesis.getVoices().length === 0) {
+            window.speechSynthesis.addEventListener('voiceschanged', function() {
+                window.speechSynthesis.getVoices();
+            });
+        }
+        else {
+            window.speechSynthesis.getVoices();
+        }
         return (
             <div class="container col-4 text-center" style={{"padding-top": "13%"}}>
                 <div class="rounded" style={{"backgroundColor": "white", "padding": "5%"}}>
