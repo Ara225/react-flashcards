@@ -35,7 +35,7 @@ class FlashCardPopup extends React.Component {
                             &nbsp; Learnt: {this.state.flashCardsLearnt.length}/{this.state.items.length}
                         </div>
                         <div className="text-center" style={{"width":"99%","position":"absolute", "top":"85%", "left":"5px","height":"10%"}} >
-                            <button class="btn btn-info" onClick={this.getPrevious}>
+                            <button class="btn btn-primary" onClick={this.getPrevious}>
                                 &lang;
                             </button>
                             &nbsp; &nbsp;
@@ -43,7 +43,7 @@ class FlashCardPopup extends React.Component {
                                 &#10003; Learnt
                             </button>
                             &nbsp; &nbsp;
-                            <button class="btn btn-info" onClick={this.getNext}>                          
+                            <button class="btn btn-primary" onClick={this.getNext}>                          
                                 &rang;
                             </button>
                             <br/>
@@ -62,7 +62,7 @@ class FlashCardPopup extends React.Component {
                             &nbsp; Learnt: {this.state.flashCardsLearnt.length}/{this.state.items.length}
                         </div>
                         <div className="text-center" style={{"width":"99%","position":"absolute", "top":"85%", "left":"5px","height":"10%"}} >
-                            <button class="btn btn-info" onClick={this.getPrevious}>
+                            <button class="btn btn-primary" onClick={this.getPrevious}>
                                 &lang;
                             </button>
                             &nbsp; &nbsp;
@@ -70,7 +70,7 @@ class FlashCardPopup extends React.Component {
                                 &#10003; Learnt
                             </button>
                             &nbsp; &nbsp;
-                            <button class="btn btn-info" onClick={this.getNext}>                          
+                            <button class="btn btn-primary" onClick={this.getNext}>                          
                                 &rang;
                             </button>
                         </div>
@@ -102,22 +102,20 @@ class FlashCardPopup extends React.Component {
 
     getNext() {
         if (this.state.items.length > 0 && this.state.currentItem+1 <= this.state.items.length-1) {
-            this.setState({ showBack: false });
-            this.setState({ currentItem: this.state.currentItem+1 });
+            this.setState({ currentItem: this.state.currentItem+1, showBack: false });
             this.randomColour()
         }
     }
 
     getPrevious() {
         if (this.state.items.length > 0 && this.state.currentItem !== 0) {
-            this.setState({ showBack: false });
-            this.setState({ currentItem: this.state.currentItem-1 });
+            this.setState({ currentItem: this.state.currentItem-1, showBack: false });
             this.randomColour()
         }
     }
 
     learntFlashcard() {
-        this.setState({ currentItem: this.state.currentItem+1, flashCardsLearnt: this.state.flashCardsLearnt+[this.state.currentItem] });
+        this.setState({ currentItem: this.state.currentItem+1, flashCardsLearnt: this.state.flashCardsLearnt+[this.state.currentItem], showBack: false });
         this.randomColour()
     }
 

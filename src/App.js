@@ -18,16 +18,17 @@ class FlashCardApp extends React.Component {
 
     render() {
         return (
-            <div class="container col-7" style={{"padding-top": "10%"}}>
+            <div class="container col-4 text-center" style={{"padding-top": "13%"}}>
                 <div class="rounded" style={{"backgroundColor": "white", "padding": "5%"}}>
-                    <h2 className="text-center" style={{"fontFamily": "Segoe Script"}}>Add Flashcards</h2>
+                    <h2 className="text-center">Add Flashcards</h2>
+                    <br/>
                     <div class="text-center">
                         <div class="fileUpload btn btn-info">
                             <span>Load from Yaml File</span>
                             <input id="uploadBtn" type="file" class="upload" onChange={this.handleFileSelect}/>
                         </div>
-                        &nbsp; &nbsp; &nbsp; &nbsp;
-                        <button class="btn" onClick={function () {
+                        &nbsp; &nbsp;
+                        <button class="btn btn-secondary" onClick={function () {
                             alert('The required format of submitted yaml files is:\n\n ' +
                                 'SectionName:\n    Weight: 2\n    Description: blah blah\n    Key Knowledge Areas:\n        - Blah Blah\n    Examples:\n' +
                                 '        - / (root) filesystem\n    Questions:\n        Prompts:\n            - / (root) filesystem\n        Answers:\n            ' +
@@ -39,20 +40,16 @@ class FlashCardApp extends React.Component {
                     </div>
                     <br />
                     <form onSubmit={this.handleSubmit} class="form-group">
-                        <input class="form-control" id="new-flashcard-front" placeholder="Front of Flash Card" />
-                        <br />
-                        <input class="form-control" id="new-flashcard-back" placeholder="Back of Flash Card" />
-                        <br />
+                        <input class="form-control" id="new-flashcard-front" placeholder="Front of Flashcard" style={{"margin-bottom":"7px"}}/>
+                        <input class="form-control" id="new-flashcard-back" placeholder="Back of Flashcard"  style={{"margin-bottom":"7px"}} />
                         <button class="btn btn-info">
-                            Add Flash Card Manually
+                            Add Flashcard Manually
                         </button>
                     </form>
                     <br/>
                     <Popup
-                      trigger={<button className="btn-success form-control" id="popupButton"> View Loaded Flashcards </button>}
-                      modal
-                      closeOnDocumentClick
-                    >
+                      trigger={<button className="form-control btn-success" id="popupButton"> View Loaded Flashcards </button>}
+                      modal closeOnDocumentClick>
                         <FlashCardPopup items={this.state.items} />
                     </Popup>
                 </div>
