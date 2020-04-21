@@ -20,13 +20,13 @@ class FlashCardApp extends React.Component {
         return (
             <div class="container col-7" style={{"padding-top": "10%"}}>
                 <div class="rounded" style={{"backgroundColor": "white", "padding": "5%"}}>
-                    <h4 class="text-center">Add Flashcards from File</h4>
+                    <h2 className="text-center" style={{"fontFamily": "Segoe Script"}}>Add Flashcards</h2>
                     <div class="text-center">
                         <div class="fileUpload btn btn-info">
                             <span>Load from Yaml File</span>
                             <input id="uploadBtn" type="file" class="upload" onChange={this.handleFileSelect}/>
                         </div>
-                        &nbsp; &nbsp;
+                        &nbsp; &nbsp; &nbsp; &nbsp;
                         <button class="btn" onClick={function () {
                             alert('The required format of submitted yaml files is:\n\n ' +
                                 'SectionName:\n    Weight: 2\n    Description: blah blah\n    Key Knowledge Areas:\n        - Blah Blah\n    Examples:\n' +
@@ -38,14 +38,13 @@ class FlashCardApp extends React.Component {
                         </button>
                     </div>
                     <br />
-                    <h4 class="text-center">Add Flashcards Manually</h4>
                     <form onSubmit={this.handleSubmit} class="form-group">
                         <input class="form-control" id="new-flashcard-front" placeholder="Front of Flash Card" />
                         <br />
                         <input class="form-control" id="new-flashcard-back" placeholder="Back of Flash Card" />
                         <br />
                         <button class="btn btn-info">
-                            Add Flash Card
+                            Add Flash Card Manually
                         </button>
                     </form>
                     <br/>
