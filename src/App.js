@@ -2,7 +2,7 @@ import React from 'react';
 import * as yaml from 'js-yaml';
 import Popup from "reactjs-popup";
 import FlashCardPopup from './FlashCardPopup';
-import './UploadButtonStyling.css'
+import './extraStyles.css'
 
 /**
  * Render the main body of the page
@@ -17,20 +17,25 @@ class FlashCardApp extends React.Component {
     }
 
     render() {
-        // Load voices in case we need them
-        window.speechSynthesis.getVoices()
-        // list of languages is probably not loaded, wait for it
-        if(window.speechSynthesis.getVoices().length === 0) {
-            window.speechSynthesis.addEventListener('voiceschanged', function() {
+        try {
+            // Load voices in case we need them
+            window.speechSynthesis.getVoices()
+            // list of languages is probably not loaded, wait for it
+            if(window.speechSynthesis.getVoices().length === 0) {
+                window.speechSynthesis.addEventListener('voiceschanged', function() {
+                    window.speechSynthesis.getVoices();
+                });
+            }
+            else {
                 window.speechSynthesis.getVoices();
-            });
+            }
         }
-        else {
-            window.speechSynthesis.getVoices();
+        catch(e) {
+            console.error("Unable to load voices in initial setup")
         }
         return (
-            <div class="container col-4 text-center" style={{"padding-top": "13%"}}>
-                <div class="rounded" style={{"backgroundColor": "white", "padding": "5%"}}>
+            <div class="container col-4 text-center mainPageOuterDiv">
+                <div class="rounded mainPageInnerDiv">
                     <h2 className="text-center">Add Flashcards</h2>
                     <br/>
                     <div class="text-center">
