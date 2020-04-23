@@ -28,7 +28,7 @@ class FlashCardPopup extends React.Component {
             }
             else {
                 click = () => {this.setState({ stopSpeaking: true });}
-                text = "▐▐"
+                text = "❚❚"
             }
             // Bodge to get this working so we don't always start with flash card 0 - not needed now
             //if (this.state.currentItemWasSet === false) {
@@ -47,25 +47,25 @@ class FlashCardPopup extends React.Component {
                     <textarea className="form-control text-center flashcardTextareaSection" id="flashCardContainer"
                         value={sideCurrentlyNeeded} disabled>
                     </textarea>
-                    <div onClick={this.flip} className="flashcardStatusSection" >
+                    <div onClick={this.flip} className="flashcardStatusSection" id="flashcardStatusSection" >
                         &nbsp; On: {this.state.currentItem+1}/{this.state.items.length}        
                         &nbsp; Learnt: {this.state.flashCardsLearnt.length}/{this.state.items.length}
                     </div>
                     <div >
-                        <button class="btn readFlashcardsBtnSection" id="readFlashcardsBtn" onClick={click}>
+                        <button className="btn readFlashcardsBtnSection" id="readFlashcardsBtn" onClick={click}>
                             {text}                          
                         </button>
                     </div>
                     <div className="text-center movementBtnsSection" >
-                        <button class="btn btn-primary" onClick={this.getPrevious}>
+                        <button className="btn btn-primary" id="getPrevious" onClick={this.getPrevious}>
                             &lang;
                         </button>
                         &nbsp; &nbsp;
-                        <button class="btn btn-success" onClick={this.learntFlashcard}>
+                        <button className="btn btn-success" id="learnt" onClick={this.learntFlashcard}>
                             &#10003; Learnt
                         </button>
                         &nbsp; &nbsp;
-                        <button class="btn btn-primary" onClick={this.getNext}>                          
+                        <button className="btn btn-primary" id="getNext" onClick={this.getNext}>                          
                             &rang;
                         </button>
                         <br/>
@@ -123,7 +123,7 @@ class FlashCardPopup extends React.Component {
     }
 
     async readFlashcardsAloud(e) {
-        document.getElementById("readFlashcardsBtn").innerHTML = "&#9616;&#9616;"
+        document.getElementById("readFlashcardsBtn").innerHTML = "❚❚"
         document.getElementById("readFlashcardsBtn").addEventListener("click", () => {this.setState({ stopSpeaking: true });})
         if (this.state.currentItem+1 === this.state.items.length) {
             this.setState({ currentItem: 0 });
@@ -198,7 +198,6 @@ class FlashCardPopup extends React.Component {
             utter.text = this.state.items[this.state.currentItem].back;
             window.speechSynthesis.speak(utter);
             while (true) {
-                console.log(window.speechSynthesis.speaking)
                 if (window.speechSynthesis.speaking && !this.state.stopSpeaking) {
                     await this.sleep(100)
                 }
@@ -231,7 +230,6 @@ class FlashCardPopup extends React.Component {
      * Flip the flash card 
      */
     flip() {
-        console.log(this.state.showBack)
         if (this.state.showBack && this.state.items.length > 0) {
             this.setState({ showBack: false });
             document.getElementById("flashCardContainer").value = this.state.items[this.state.currentItem].front

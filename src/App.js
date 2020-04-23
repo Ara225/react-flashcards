@@ -34,31 +34,25 @@ class FlashCardApp extends React.Component {
             console.error("Unable to load voices in initial setup")
         }
         return (
-            <div class="container col-4 text-center mainPageOuterDiv">
-                <div class="rounded mainPageInnerDiv">
+            <div className="container col-4 text-center mainPageOuterDiv">
+                <div className="rounded mainPageInnerDiv">
                     <h2 className="text-center">Add Flashcards</h2>
                     <br/>
-                    <div class="text-center">
-                        <div class="fileUpload btn btn-info">
+                    <div className="text-center">
+                        <div className="fileUpload btn btn-info">
                             <span>Load from Yaml File</span>
-                            <input id="uploadBtn" type="file" class="upload" onChange={this.handleFileSelect}/>
+                            <input id="uploadBtn" type="file" className="upload" onChange={this.handleFileSelect}/>
                         </div>
                         &nbsp; &nbsp;
-                        <button class="btn btn-secondary" onClick={function () {
-                            alert('The required format of submitted yaml files is:\n\n ' +
-                                'SectionName:\n    Weight: 2\n    Description: blah blah\n    Key Knowledge Areas:\n        - Blah Blah\n    Examples:\n' +
-                                '        - / (root) filesystem\n    Questions:\n        Prompts:\n            - / (root) filesystem\n        Answers:\n            ' +
-                                '- / (root) filesystem\n\nNotes:\nMultiple top level keys are supported but they\'re all lumped together, only the Questions key and ' +
-                                'it\'s Prompts/Answers keys are needed under each\n')
-                            }}>
+                        <button className="btn btn-secondary" onClick={this.yamlFormatAlert}>
                             Yaml File Format
                         </button>
                     </div>
                     <br />
-                    <form onSubmit={this.handleSubmit} class="form-group">
-                        <input class="form-control" id="new-flashcard-front" placeholder="Front of Flashcard" style={{"margin-bottom":"7px"}}/>
-                        <input class="form-control" id="new-flashcard-back" placeholder="Back of Flashcard"  style={{"margin-bottom":"7px"}} />
-                        <button class="btn btn-info">
+                    <form onSubmit={this.handleSubmit} className="form-group">
+                        <input className="form-control flashcard-textbox" id="new-flashcard-front" placeholder="Front of Flashcard"/>
+                        <input className="form-control flashcard-textbox" id="new-flashcard-back" placeholder="Back of Flashcard" />
+                        <button className="btn btn-info" id="submitButton">
                             Add Flashcard Manually
                         </button>
                     </form>
@@ -108,7 +102,7 @@ class FlashCardApp extends React.Component {
         try {
             var item = []
             this.setState({ text: yaml.safeLoad(event.target.result) });
-            // Ugly for/if section 
+            // Ugly for/if section to go through the keys in the Yaml file
             for (var key of Object.keys(this.state.text)) {
                 for (var key2 of Object.keys(this.state.text[key])) {
                     if (!key2.match('Weight') && !key2.match('Description') && !key2.match('KeyKnowledgeAreas') && !key2.match('Examples') && !key2.match('Key Knowledge Areas')) {
@@ -159,6 +153,24 @@ class FlashCardApp extends React.Component {
         this.setState(state => ({
             items: state.items.concat(newItem),
         }));
+    }
+
+    yamlFormatAlert() {
+        alert('The required format of submitted yaml files is:\n\n ' +
+            'SectionName:\n' + 
+            '    Weight: 2\n' + 
+            '    Description: blah blah\n' +
+            '    Key Knowledge Areas:\n' + 
+            '        - Blah Blah\n' +
+            '    Examples:\n' +
+            '        - / (root) filesystem\n' + 
+            '    Questions:\n' + 
+            '        Prompts:\n' + 
+            '            - / (root) filesystem\n' + 
+            '        Answers:\n' + 
+            '            - / (root) filesystem\n\n' +
+            'Notes:\nMultiple top level keys are supported but they\'re all lumped together, only the Questions key and ' +
+            'it\'s Prompts/Answers keys are needed under each\n')
     }
 }
 

@@ -55,3 +55,8 @@
     background-color: white;
     padding: 5%
 }
+
+/* Form textbox styling */
+.flashcard-textbox {
+    margin-bottom:7px
+}
